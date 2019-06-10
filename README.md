@@ -1,1 +1,1 @@
-# hello-go
+# kata-bowling
