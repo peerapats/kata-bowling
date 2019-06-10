@@ -1,7 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
-	fmt.Println("Hello Golang!")
+	var games = []string{"2/", "x", "x", "x", "x", "x", "x", "x", "x", "xxx"}
+	score := 0
+	for index, value := range games {
+		fmt.Println(index, " = ", value)
+	}
+	fmt.Println(score)
 }
