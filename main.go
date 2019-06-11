@@ -25,5 +25,5 @@ func main() {
 		totalScore += frameScore
 		fmt.Println("Frame", key+1, " = ", i1+i2)
 	}
-	fmt.Println(totalScore)
+	fmt.Println("Total: ", totalScore)
 }
