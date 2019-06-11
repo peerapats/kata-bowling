@@ -20,9 +20,12 @@ var input = [10]string{
 	"X-",
 	"X-",
 	"X-",
-	"X-",
-	"XXX",
+	"4/",
+	"24",
 }
+
+// มี Bug ใน Frame ที่ 8 จะต้องมีแต้มเป็น 20
+// เพราะว่า Frame 9 เกิด Spare
 
 func main() {
 
@@ -34,20 +37,25 @@ func main() {
 			str := string(ch)
 
 			var scoreValue int
-			if str == "X" || str == "/" {
-				scoreValue = 10
-			} else if str == "-" {
+			if str == "-" {
 				scoreValue = 0
+			} else if str == "X" || str == "/" {
+				scoreValue = 10
+
+				if gameNoIndex == 9 {
+					score[gameNoIndex] += scoreValue
+				} else {
+					score[gameNoIndex] = scoreValue
+				}
 			} else {
 				iValue, _ := strconv.ParseInt(str, 10, 32)
 				scoreValue = int(iValue)
+
+				score[gameNoIndex] += scoreValue
 			}
 
 			// Fullfill score to preivos Strike or Spare game
 			fullfillScore(scoreValue)
-
-			// Keep current score value.
-			score[gameNoIndex] += scoreValue
 
 			// Keep carry fullfill score to current Game
 			if gameNoIndex < len(input)-1 {
@@ -77,7 +85,7 @@ func fullfillScore(scoreValue int) {
 
 func showScore() {
 	for index, value := range score {
-		fmt.Printf("Frame %d: %d\n", index+1, value)
+		fmt.Printf("Frame %d [ %s ]: %d\n", index+1, input[index], value)
 		// fmt.Println("Frame %d: %d", index+1, value)
 	}
 }
