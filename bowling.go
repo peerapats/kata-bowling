@@ -20,11 +20,9 @@ func isNumeric(s string) bool {
 	return err == nil
 }
 
-func main() {
-	rolls := []string{"24", "x", "3/", "12", "x", "5/", "x", "x", "44", "xxx"}
+func getScoreFrames(rolls []string) (frames []frame) {
 	size := len(rolls)
 
-	var frames []frame
 	for i := 0; i < size; i++ {
 		pins := strings.Split(rolls[i], "")
 
@@ -57,7 +55,14 @@ func main() {
 		}
 	}
 
-	for j := 0; j < len(frames); j++ {
-		fmt.Println("Frame ", j+1, " = ", frames[j].score)
+	return frames
+}
+
+func main() {
+	rolls := []string{"24", "x", "3/", "12", "x", "5/", "x", "x", "44", "xxx"}
+	frames := getScoreFrames(rolls)
+	for i := 0; i < len(frames); i++ {
+		f := frames[i]
+		fmt.Println("Frame", i+1, "["+f.pins_1+"]["+f.pins_2+"]", " = ", f.score)
 	}
 }
