@@ -84,7 +84,6 @@ func calculateStrike(s2 []string, scores [10]string, index int) int {
 		} else {
 			return 20 + convertStringToInt(s2[1])
 		}
-		
 	} else {
 		if s2[1] == "/" {
 			return 20
