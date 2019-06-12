@@ -3,7 +3,14 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println("Hello Golang!")
+	scores := [5]string{"9", "0", "9", "1", "10"}
+
+	for index, name := range scores {
+
+
+
+		fmt.Println(index, name)
+	}
 }
 
 func AlwaysReturn1() int {
