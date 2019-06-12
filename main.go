@@ -18,10 +18,10 @@ var input = [10]string{
 	"X-",
 	"X-",
 	"X-",
+	"-/",
+	"3/",
 	"X-",
-	"X-",
-	"4/",
-	"24",
+	"XX8",
 }
 
 // มี Bug ใน Frame ที่ 8 จะต้องมีแต้มเป็น 20
@@ -39,23 +39,25 @@ func main() {
 			var scoreValue int
 			if str == "-" {
 				scoreValue = 0
-			} else if str == "X" || str == "/" {
+			} else if str == "X" {
 				scoreValue = 10
-
-				if gameNoIndex == 9 {
-					score[gameNoIndex] += scoreValue
-				} else {
-					score[gameNoIndex] = scoreValue
+			} else if str == "/" {
+				var priorScore = 20
+				if score[gameNoIndex] < 10 {
+					priorScore = 10
 				}
+
+				scoreValue = priorScore - score[gameNoIndex]
+
 			} else {
 				iValue, _ := strconv.ParseInt(str, 10, 32)
 				scoreValue = int(iValue)
-
-				score[gameNoIndex] += scoreValue
 			}
 
 			// Fullfill score to preivos Strike or Spare game
 			fullfillScore(scoreValue)
+
+			score[gameNoIndex] += scoreValue
 
 			// Keep carry fullfill score to current Game
 			if gameNoIndex < len(input)-1 {
