@@ -8,14 +8,22 @@ type Person struct {
 	name string
 }
 
-// func TestAlwaysReturn1(t *testing.T) {
-// 	result := AlwaysReturn1()
-// 	if result != 1 {
-// 		t.Error("Result should be 1")
-// 	}
-// }
-
-func TestAlwaysReturn1WithAssert(t *testing.T) {
-	result := main()
-	assert.Equal(t, 1, result, "Result should be 1")
+func Test1(t *testing.T) {
+	scores := [...] string{
+		"10", "0",
+		"7", "2",
+		"0", "0",
+		"0", "0",
+		"0", "0",
+		"0", "0",
+		"0", "0",
+		"0", "0",
+		"0", "0",
+		"0", "0",
+		"0", "0",
+	}
+	result := board(scores);
+	var expected int64;
+	expected = 19;
+	assert.Equal(t, expected, result[0].totalScore, "Result should be 1")
 }
