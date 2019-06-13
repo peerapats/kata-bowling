@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"strings"
 	"strconv"
+	"strings"
 )
 
 var score0 = [10]string{"x-", "x-", "x-", "x-", "x-", "x-", "x-", "x-", "x-", "xxx"}
@@ -15,53 +15,56 @@ var score = [10]string{"x-", "1/", "12", "12", "12", "12", "12", "12", "12", "12
 
 func main() {
 	// fmt.Println("Hello Golang!")
-	calc(score0)
+	result := calc(score0)
+	fmt.Println(result)
 }
 
-func calc(scores [10]string) {
+func calc(scores [10]string) [10]int {
 	fmt.Println(scores)
-	// sum := 0
+	var result = [10]int{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 	for i := range scores {
 		// fmt.Println(scores[i])
 		s := strings.Split(scores[i], "")
 		// fmt.Println(s)
 
 		if i == 9 {
-			throwLast(s, scores, i)
+			result[i] = throwLast(s, scores, i)
 		} else {
-			throwing(s, scores, i)
+			result[i] = throwing(s, scores, i)
 		}
 	}
+
+	return result
 }
 
-func throwLast(s []string, scores [10]string, index int) {
-	
+func throwLast(s []string, scores [10]string, index int) int {
+	return 0
 }
 
-func throwing(s []string, scores [10]string, index int) {
+func throwing(s []string, scores [10]string, index int) int {
 	// fmt.Println(s)
 	sum := 0
 	switch s[0] {
-		case "-":
-			sum = 0
-		case "x":
-			s2 := strings.Split(scores[index + 1], "")
-			sum = calculateStrike(s2, scores, index)
-		case "1", "2", "3", "4", "5", "6", "7", "8", "9" :
-			sum = convertStringToInt(s[0])
+	case "-":
+		sum = 0
+	case "x":
+		s2 := strings.Split(scores[index+1], "")
+		sum = calculateStrike(s2, scores, index)
+	case "1", "2", "3", "4", "5", "6", "7", "8", "9":
+		sum = convertStringToInt(s[0])
 	}
 
 	switch s[1] {
-		case "-":
-			sum = sum + 0
-		case "1", "2", "3", "4", "5", "6", "7", "8", "9" :
-			sum = sum + convertStringToInt(s[1])
-		case "/":
-			s2 := strings.Split(scores[index + 1], "")
-			sum = calSpare(s2)
-	}	
+	case "-":
+		sum = sum + 0
+	case "1", "2", "3", "4", "5", "6", "7", "8", "9":
+		sum = sum + convertStringToInt(s[1])
+	case "/":
+		s2 := strings.Split(scores[index+1], "")
+		sum = calSpare(s2)
+	}
 
-	fmt.Println(sum)
+	return sum
 }
 
 func calSpare(s2 []string) int {
@@ -75,7 +78,7 @@ func calSpare(s2 []string) int {
 func calculateStrike(s2 []string, scores [10]string, index int) int {
 	if s2[0] == "x" {
 		if index != 8 {
-			s3 := strings.Split(scores[index + 2], "")
+			s3 := strings.Split(scores[index+2], "")
 			if s3[0] == "x" {
 				return 30
 			} else {
