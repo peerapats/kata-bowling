@@ -18,17 +18,41 @@ type Frame struct {
 // http://www.star-circuit.com/article/another-article/bowling/Counting-bowling-score.html
 func main() {
 	scores := [...] string{
+		// "6", "2", 
+		// "3", "7",
+		// "10", "0",
+		// "0", "10",
+		// "1", "6",
+		// "1", "6",
+		// "1", "6",
+		// "10", "0",
+		// "10", "0",
+		// "10", "0", "10", 
+		// "0",
+
 		"10", "0",
-		"7", "2",
-		"9", "1",
-		"8", "1",
 		"10", "0",
-		"10", "0",
-		"9", "1",
-		"0", "10",
-		"7", "2",
-		"1", "10",
-		"1", "0",
+		"2", "0",
+		"0", "0",
+		"0", "0",
+		"0", "0",
+		"0", "0",
+		"0", "0",
+		"0", "0",
+		"0", "0",
+		"0", "0",
+		
+		// "10", "0",
+		// "7", "2",
+		// "9", "1",
+		// "8", "1",
+		// "10", "0",
+		// "10", "0",
+		// "9", "1",
+		// "0", "10",
+		// "7", "2",
+		// "1", "10",
+		// "1", "0",
 		// // ----------> sum 127
 
 		// "6", "1",
@@ -85,11 +109,13 @@ func main() {
 		// ----------> sum 300
 	}
 	var result = board(scores);
+	// fmt.Println(result[0].totalScore);
+
 	for index, frame := range result {
 		if(index + 1 > 10) {
 			continue;
 		}
-		fmt.Println("Frame:", index + 1, "===>", frame.name1, frame.name2, "=", frame.totalScore, ",", frame.sumScore )
+		fmt.Println("Frame:", index + 1, "===>", frame.name1, frame.name2, "(", frame.currentScore,")" ,  "=", frame.totalScore, ",", frame.sumScore )
 	}
 	// return result;
 }
@@ -118,8 +144,8 @@ func printScore(frames []Frame) []Frame {
 			frame.totalScore += frames[next1].score1;
 			var isFrame10 = index + 1 == 10;
 			if(!isFrame10){
-			// find second bonus
-				if(frames[next1].score2 == 0){
+				// find second bonus
+				if(frames[next1].score2 == 0 &&  frames[next1].score1 + frames[next1].score2 == 10){
 					frame.totalScore += frames[next2].score1;
 				} else {
 					frame.totalScore += frames[next1].score2;
