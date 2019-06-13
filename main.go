@@ -83,18 +83,21 @@ func main() {
 		// "10", "10",
 		// "10", "10",
 		// ----------> sum 300
-
 	}
-
-	var frames = makeFrames(scores);
-	var result = printScore(frames);
-	fmt.Println("==========>");
+	var result = board(scores);
 	for index, frame := range result {
 		if(index + 1 > 10) {
 			continue;
 		}
 		fmt.Println("Frame:", index + 1, "===>", frame.name1, frame.name2, "=", frame.totalScore, ",", frame.sumScore )
 	}
+	// return result;
+}
+
+func board(scores [22]string) []Frame {
+	var frames = makeFrames(scores);
+	var result = printScore(frames);
+	return result;
 }
 
 func printScore(frames []Frame) []Frame {
@@ -126,9 +129,8 @@ func printScore(frames []Frame) []Frame {
 
 		sum += frame.totalScore
 		frame.sumScore += sum;
-
 		frames[index] = frame;
-		fmt.Println(index, next1, next2, len(frames));
+		// fmt.Println(index, next1, next2, len(frames));
 	}
 	return frames;
 }
