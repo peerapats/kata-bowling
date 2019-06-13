@@ -38,7 +38,25 @@ func calc(scores [10]string) [10]int {
 }
 
 func throwLast(s []string, scores [10]string, index int) int {
-	return 0
+	sum := 0
+	sum = convertStringToInt(s[0])
+
+	switch s[1] {
+	case "-":
+		sum = sum + 0
+	case "1", "2", "3", "4", "5", "6", "7", "8", "9":
+		sum = sum + convertStringToInt(s[1])
+	case "x":
+		sum = sum + 10
+	case "/":
+		sum = 10
+	}
+
+	if len(s) == 3 {
+		sum = sum + convertStringToInt(s[2])
+	}
+
+	return sum
 }
 
 func throwing(s []string, scores [10]string, index int) int {
