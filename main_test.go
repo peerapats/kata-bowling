@@ -23,8 +23,8 @@ func TestCaseSuperStrike(t *testing.T) {
 }
 
 func TestCase1(t *testing.T) {
-	var score1 = [10]string{"62", "4/", "x-", "4/", "x-", "x-", "x-", "x-", "x-", "x--"}
-	var expect = [10]int{8, 20, 20, 20, 30, 30, 30, 30, 20, 10}
+	var score1 = [10]string{"62", "--", "--", "--", "--", "--", "--", "--", "--", "--"}
+	var expect = [10]int{8, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 	result := calc(score1)
 	fmt.Println(result)
 	fmt.Println("")
@@ -32,8 +32,8 @@ func TestCase1(t *testing.T) {
 }
 
 func TestCase2(t *testing.T) {
-	var score1 = [10]string{"62", "4/", "x-", "4/", "x-", "x-", "x-", "x-", "x-", "42-"}
-	var expect = [10]int{8, 20, 20, 20, 30, 30, 30, 24, 16, 6}
+	var score1 = [10]string{"4/", "52", "--", "--", "--", "--", "--", "--", "--", "--"}
+	var expect = [10]int{15, 7, 0, 0, 0, 0, 0, 0, 0, 0}
 	result := calc(score1)
 	fmt.Println(result)
 	fmt.Println("")
