@@ -6,30 +6,46 @@ import (
 )
 
 // เก็บคะแนนของแต่ละเกมส์
-var score [10]int
+// var score [10]int
 
-// เก็บตัวทดการสะสมคะแนน
-var carry [10]int
+// // เก็บตัวทดการสะสมคะแนน
+// var carry [10]int
 
-var input = [10]string{
-	"--",  
-	"--",  
-	"--",  
-	"--",  
-	"--",
-	"--",
-	"--",
-	"--",
-	"--",
-	"5/9",
-}
 
-// มี Bug ใน Frame ที่ 8 จะต้องมีแต้มเป็น 20
-// เพราะว่า Frame 9 เกิด Spare
 
 func main() {
 
+	
+
+	var input = [10]string{
+		"--",  
+		"--",  
+		"--",  
+		"--",  
+		"--",
+		"--",
+		"--",
+		"--",
+		"--",
+		"5/9",
+	};
+
 	fmt.Println("Input: ", input)
+
+	var result = playGame(input);
+
+	fmt.Println(result);
+
+	//showScore()
+	fmt.Println("Total Score: ", sumScore(result));
+}
+
+func playGame(input [10]string) [10]int {
+	// เก็บคะแนนของแต่ละเกมส์
+	var score [10]int
+
+	// เก็บตัวทดการสะสมคะแนน
+	var carry [10]int
 
 	for gameNoIndex, value := range input {
 
@@ -55,7 +71,7 @@ func main() {
 			}
 
 			// Fullfill score to preivos Strike or Spare game
-			fullfillScore(scoreValue)
+			fullfillScore(scoreValue, &score, &carry);
 
 			score[gameNoIndex] += scoreValue
 
@@ -72,11 +88,10 @@ func main() {
 
 	}
 
-	showScore()
-	fmt.Println("Total Score: ", sumScore())
+	return score;
 }
 
-func fullfillScore(scoreValue int) {
+func fullfillScore(scoreValue int, score *[10]int, carry *[10]int) {
 	for index, value := range carry {
 		if value > 0 {
 			score[index] += scoreValue
@@ -85,14 +100,13 @@ func fullfillScore(scoreValue int) {
 	}
 }
 
-func showScore() {
-	for index, value := range score {
-		fmt.Printf("Frame %d [ %s ]: %d\n", index+1, input[index], value)
-		// fmt.Println("Frame %d: %d", index+1, value)
-	}
-}
-
-func sumScore() int {
+// func showScore() {
+// 	for index, value := range score {
+// 		fmt.Printf("Frame %d [ %s ]: %d\n", index+1, input[index], value)
+// 		// fmt.Println("Frame %d: %d", index+1, value)
+// 	}
+// }
+func sumScore(score [10]int) int {
 	totalScore := 0
 	for _, val := range score {
 		totalScore += val
@@ -100,3 +114,4 @@ func sumScore() int {
 
 	return totalScore
 }
+
