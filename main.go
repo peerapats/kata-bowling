@@ -17,6 +17,13 @@ func main() {
 	// fmt.Println("Hello Golang!")
 	result := calc(score0)
 	fmt.Println(result)
+
+	overall := 0
+	for i := range result {
+		overall = overall + result[i]
+	}
+
+	fmt.Println("Overall", overall)
 }
 
 func calc(scores [10]string) [10]int {
