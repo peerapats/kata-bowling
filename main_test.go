@@ -11,10 +11,10 @@ type Person struct {
 	name string
 }
 
-func Test1(t *testing.T) {
+func TestFrame1DoubleStrike(t *testing.T) {
 	scores := [...] string{
 		"X", "-",
-		"7", "2",
+		"X", "-",
 		"-", "-",
 		"-", "-",
 		"-", "-",
@@ -25,9 +25,9 @@ func Test1(t *testing.T) {
 		"-", "-", "-", 
 	}
 	result := board(scores);
-	expected := int64(19);
+	expected := int64(30);
 	printFrames(1, expected, result);
-	assert.Equal(t, expected, result[1 - 1].totalScore, "Result should be 1")
+	assert.Equal(t, expected, result[10 - 1].sumScore, "Result should be 30")
 }
 
 func printFrames(frame int64, expected int64,  frames []Frame) {
@@ -52,9 +52,9 @@ func Test2(t *testing.T) {
 			"-", "-", "-",
 		}
 		result := board(scores);
-		expected := int64(22);
+		expected := int64(36);
 		printFrames(1, expected, result);
-		assert.Equal(t, expected, result[1 - 1].totalScore, "Result should be 1")
+		assert.Equal(t, expected, result[10 - 1].sumScore, "Result should be 1")
 }
 
 func Test3(t *testing.T) {
@@ -169,4 +169,61 @@ func Test8(t *testing.T) {
 	var expected int64;
 	expected = 30;
 	assert.Equal(t, expected, result[10 - 1].totalScore, "Result should be 1")
+}
+
+func TestFrame10DoubleStrike(t *testing.T) {
+	scores := [...] string{
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"X", "-",
+		"X", "2", "3",
+	}
+	result := board(scores);
+	var expected int64;
+	expected = 37;
+	assert.Equal(t, expected, result[10 - 1].sumScore, "Result should be 37")
+}
+
+func TestFrame10Spare(t *testing.T) {
+	scores := [...] string{
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"-", "/", "7",
+	}
+	result := board(scores);
+	var expected int64;
+	expected = 17;
+	assert.Equal(t, expected, result[10 - 1].sumScore, "Result should be 17")
+}
+
+func TestFrame10Strike(t *testing.T) {
+	scores := [...] string{
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"X", "X", "5",
+	}
+	result := board(scores);
+	var expected int64;
+	expected = 25;
+	assert.Equal(t, expected, result[10 - 1].sumScore, "Result should be 25")
 }

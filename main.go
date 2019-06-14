@@ -21,6 +21,16 @@ type Frame struct {
 
 func main() {
 	scores := [...] string{
+		"X", "-",
+		"X", "-",
+		"2", "-",
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"-", "-",
+		"-", "-", "-", 
 		// "1", "6", 
 		// "3", "/",
 		// "X", "-",
@@ -68,16 +78,16 @@ func main() {
 		// "4", "5", "-",
 		// // ----------> sum 163
 
-			"X", "-",
-			"X", "-",
-			"X", "-",
-			"X", "-",
-			"X", "-",
-			"X", "-",
-			"X", "-",
-			"X", "-",
-			"X", "-",
-			"X", "X", "X",
+			// "X", "-",
+			// "X", "-",
+			// "X", "-",
+			// "X", "-",
+			// "X", "-",
+			// "X", "-",
+			// "X", "-",
+			// "X", "-",
+			// "X", "-",
+			// "X", "X", "X",
 		// 	// "10", "0",
 		// 	// "10", "0",
 		// 	// "10", "0",
@@ -91,12 +101,19 @@ func main() {
 		// 	// "10", "10",
 		// 	// ----------> sum 300
 	}
-	var result = board(scores);
-	// fmt.Println(result[0].totalScore);
 
-	for index, frame := range result {
-		fmt.Println("Frame:", index + 1, "===>", frame.name1, frame.name2, frame.bonus, ":", frame.score3,  frame.totalScore, "," , frame.sumScore )
+	var result = board(scores);
+	var str string
+
+	for _, frame := range result {
+	 str += fmt.Sprintf("%v%v ", frame.name1, frame.name2)
 	}
+	fmt.Println("[", str, "]");
+	for index, frame := range result {
+		fmt.Println("Frame", index + 1, ": =", frame.totalScore )
+	}
+	fmt.Println("Total = ", result[9].sumScore);
+
 }
 
 func board(scores [21]string) []Frame {
