@@ -14,25 +14,14 @@ var score3 = [10]string{"-/", "6-", "x-", "71", "8-", "x-", "6/", "7/", "-/", "3
 var score = [10]string{"x-", "1/", "12", "12", "12", "12", "12", "12", "12", "12"}
 
 func main() {
-	// fmt.Println("Hello Golang!")
-	result := calc(score0)
-	fmt.Println(result)
-
-	overall := 0
-	for i := range result {
-		overall = overall + result[i]
-	}
-
-	fmt.Println("Overall", overall)
+	calc(score0)
 }
 
 func calc(scores [10]string) [10]int {
 	fmt.Println(scores)
 	var result = [10]int{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 	for i := range scores {
-		// fmt.Println(scores[i])
 		s := strings.Split(scores[i], "")
-		// fmt.Println(s)
 
 		if i == 9 {
 			result[i] = throwLast(s, scores, i)
@@ -40,6 +29,13 @@ func calc(scores [10]string) [10]int {
 			result[i] = throwing(s, scores, i)
 		}
 	}
+
+	overall := 0
+	for i := range result {
+		overall = overall + result[i]
+	}
+
+	fmt.Println("Total =", overall)
 
 	return result
 }
@@ -63,11 +59,12 @@ func throwLast(s []string, scores [10]string, index int) int {
 		sum = sum + convertStringToInt(s[2])
 	}
 
+	fmt.Println("Frame", 10, ": =", sum)
+
 	return sum
 }
 
 func throwing(s []string, scores [10]string, index int) int {
-	// fmt.Println(s)
 	sum := 0
 	switch s[0] {
 	case "-":
@@ -88,6 +85,8 @@ func throwing(s []string, scores [10]string, index int) int {
 		s2 := strings.Split(scores[index+1], "")
 		sum = calSpare(s2)
 	}
+
+	fmt.Println("Frame", index+1, ": =", sum)
 
 	return sum
 }
@@ -130,10 +129,6 @@ func convertStringToInt(str string) int {
 		return 10
 	}
 
-	i1, err := strconv.Atoi(str)
-	if err == nil {
-		return i1
-	} else {
-		return 0
-	}
+	i1, _ := strconv.Atoi(str)
+	return i1
 }
