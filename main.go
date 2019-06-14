@@ -11,33 +11,33 @@ import (
 // // เก็บตัวทดการสะสมคะแนน
 // var carry [10]int
 
-
-
 func main() {
 
-	
-
 	var input = [10]string{
-		"--",  
-		"--",  
-		"--",  
-		"--",  
+		"--",
+		"--",
+		"--",
+		"--",
 		"--",
 		"--",
 		"--",
 		"--",
 		"--",
 		"5/9",
-	};
+	}
 
 	fmt.Println("Input: ", input)
 
-	var result = playGame(input);
+	var result = playGame(input)
 
-	fmt.Println(result);
+	fmt.Println(result)
+
+	for index, value := range result {
+		fmt.Printf("Frame %d : = %d\n", index+1, value)
+	}
 
 	//showScore()
-	fmt.Println("Total Score: ", sumScore(result));
+	fmt.Println("Total Score: ", sumScore(result))
 }
 
 func playGame(input [10]string) [10]int {
@@ -62,7 +62,6 @@ func playGame(input [10]string) [10]int {
 				if score[gameNoIndex] < 10 {
 					priorScore = 10
 				}
-
 				scoreValue = priorScore - score[gameNoIndex]
 
 			} else {
@@ -71,7 +70,7 @@ func playGame(input [10]string) [10]int {
 			}
 
 			// Fullfill score to preivos Strike or Spare game
-			fullfillScore(scoreValue, &score, &carry);
+			fullfillScore(scoreValue, &score, &carry)
 
 			score[gameNoIndex] += scoreValue
 
@@ -88,7 +87,7 @@ func playGame(input [10]string) [10]int {
 
 	}
 
-	return score;
+	return score
 }
 
 func fullfillScore(scoreValue int, score *[10]int, carry *[10]int) {
@@ -114,4 +113,3 @@ func sumScore(score [10]int) int {
 
 	return totalScore
 }
-
