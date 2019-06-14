@@ -10,117 +10,96 @@ type Frame struct {
 	name2 string
 	score1 int64
 	score2 int64
+
+	bonus string
+	score3 int64
+
 	totalScore int64
 	currentScore int64
 	sumScore int64
 }
 
-// http://www.star-circuit.com/article/another-article/bowling/Counting-bowling-score.html
 func main() {
 	scores := [...] string{
-		// "6", "2", 
-		// "3", "7",
-		// "10", "0",
-		// "0", "10",
+		// "1", "6", 
+		// "3", "/",
+		// "X", "-",
+		// "-", "/",
 		// "1", "6",
 		// "1", "6",
 		// "1", "6",
-		// "10", "0",
-		// "10", "0",
-		// "10", "0", "10", 
-		// "0",
-
-		"10", "0",
-		"10", "0",
-		"2", "0",
-		"0", "0",
-		"0", "0",
-		"0", "0",
-		"0", "0",
-		"0", "0",
-		"0", "0",
-		"0", "0",
-		"0", "0",
-		
-		// "10", "0",
-		// "7", "2",
-		// "9", "1",
-		// "8", "1",
-		// "10", "0",
-		// "10", "0",
-		// "9", "1",
-		// "0", "10",
-		// "7", "2",
-		// "1", "10",
-		// "1", "0",
-		// // ----------> sum 127
+		// "X", "-",
+		// "X", "-",
+		// "X", "-", "2",
 
 		// "6", "1",
-		// "9", "0",
-		// "8", "2",
-		// "5", "5",
-		// "8", "0",
+		// "9", "-",
+		// "8", "/",
+		// "5", "/",
+		// "8", "-",
 		// "6", "2",
-		// "9", "1",
+		// "9", "/",
 		// "7", "2",
-		// "8", "2",
-		// "9", "1",
-		// "7", "3",
-		// // // ----------> sum 127
+		// "8", "/",
+		// "9", "/", "7",
+		// // ----------> sum 127
 
-		// "10", "0",
-		// "10", "0",
-		// "7", "3",
-		// "8", "2",
-		// "10", "0",
-		// "9", "1",
-		// "10", "0",
-		// "10", "0",
-		// "10", "0",
-		// "10", "7",
-		// "3", "0",
-		// // ----------> sum 232
+		// "X", "-",
+		// "X", "-",
+		// "7", "/",
+		// "8", "/",
+		// "X", "0",
+		// "9", "/",
+		// "X", "-",
+		// "X", "-",
+		// "X", "-",
+		// "X", "7", "/",
+		// ----------> sum 232
 
-		// "5", "5",
-		// "8", "2",
-		// "9", "1",
-		// "7", "3",
-		// "8", "2",
-		// "6", "4",
-		// "9", "1",
-		// "7", "3",
-		// "6", "4",
-		// "4", "5",
-		// "3", "0",
-		// ----------> sum 163
+		// "5", "/",
+		// "8", "/",
+		// "9", "/",
+		// "7", "/",
+		// "8", "/",
+		// "6", "/",
+		// "9", "/",
+		// "7", "/",
+		// "6", "/",
+		// "4", "5", "-",
+		// // ----------> sum 163
 
-
-		// "10", "0",
-		// "10", "0",
-		// "10", "0",
-		// "10", "0",
-		// "10", "0",
-		// "10", "0",
-		// "10", "0",
-		// "10", "0",
-		// "10", "0",
-		// "10", "10",
-		// "10", "10",
-		// ----------> sum 300
+			"X", "-",
+			"X", "-",
+			"X", "-",
+			"X", "-",
+			"X", "-",
+			"X", "-",
+			"X", "-",
+			"X", "-",
+			"X", "-",
+			"X", "X", "X",
+		// 	// "10", "0",
+		// 	// "10", "0",
+		// 	// "10", "0",
+		// 	// "10", "0",
+		// 	// "10", "0",
+		// 	// "10", "0",
+		// 	// "10", "0",
+		// 	// "10", "0",
+		// 	// "10", "0",
+		// 	// "10", "10",
+		// 	// "10", "10",
+		// 	// ----------> sum 300
 	}
 	var result = board(scores);
 	// fmt.Println(result[0].totalScore);
 
 	for index, frame := range result {
-		if(index + 1 > 10) {
-			continue;
-		}
-		fmt.Println("Frame:", index + 1, "===>", frame.name1, frame.name2, "(", frame.currentScore,")" ,  "=", frame.totalScore, ",", frame.sumScore )
+		fmt.Println("Frame:", index + 1, "===>", frame.name1, frame.name2, frame.bonus, ":", frame.score3,  frame.totalScore, "," , frame.sumScore )
 	}
-	// return result;
 }
 
-func board(scores [22]string) []Frame {
+func board(scores [21]string) []Frame {
 	var frames = makeFrames(scores);
 	var result = printScore(frames);
 	return result;
@@ -131,93 +110,109 @@ func printScore(frames []Frame) []Frame {
 	for index, frame := range frames {
 		var next1 = index + 1;
 		var next2 = index + 2;
-		if(next1 > len(frames) || next2 > len(frames)){
-			continue;
-		}
-
-		if(frame.name2 == "/"){
-			frame.totalScore += frames[next1].score1;
-		}
-
-		if(frame.name1 == "X"){
-			// find first bonus
-			frame.totalScore += frames[next1].score1;
-			var isFrame10 = index + 1 == 10;
-			if(!isFrame10){
-				// find second bonus
-				if(frames[next1].score2 == 0 &&  frames[next1].score1 + frames[next1].score2 == 10){
+		// fmt.Println(index, next1, next2, len(frames));
+		var isFrame10 = index + 1 == 10;
+		if(isFrame10){
+			// spare - plus bonus 1 box
+			if(frame.name2 == "/"){
+				frame.totalScore += frames[index].score3;
+			} 
+			// spare - plus bonus 3 box
+			if(frame.name1 == "X"){
+				frame.totalScore += frames[index].score3;
+			}
+		} else {
+			// spare - plus bonus 1 box
+			if(frame.name2 == "/"){
+				frame.totalScore += frames[next1].score1; // first box
+			}
+			// strike - plus bonus 2 box
+			if(frame.name1 == "X"){
+				// first box
+				frame.totalScore += frames[next1].score1; 
+				// second box
+				var isFrame9 = index + 1 == 9;
+				if(frames[next1].score2 == 0 &&  frames[next1].score1 + frames[next1].score2 == 10 && !isFrame9) {
 					frame.totalScore += frames[next2].score1;
 				} else {
 					frame.totalScore += frames[next1].score2;
 				}
 			}
 		}
-
+ 
 		sum += frame.totalScore
 		frame.sumScore += sum;
 		frames[index] = frame;
-		// fmt.Println(index, next1, next2, len(frames));
 	}
 	return frames;
 }
 
-func makeFrames(scores [22]string) []Frame {
+func makeFrames(scores [21]string) []Frame {
 	var frames []Frame
 	for index := range scores {
 		var isEndFrame = index > 0 && index % 2 != 0;
-		if(!isEndFrame){
+		// fmt.Println("Index", index, "Value ", scores[index]);
+		var isFrame10 = index == 19;
+		var isBonus = index == 21;
+		if(!isEndFrame && !isBonus){
 			continue;
 		}
 
-		var score1 = scores[index - 1];
-		var score2 = scores[index];
+		var symbol1 = scores[index - 1];
+		var symbol2 = scores[index];
 		var f = new(Frame);
-		f.name1 = convertBowling1(score1);
-		f.name2 = convertBowling2(score1, score2);
-		f.score1 = scoreToInt(score1);
-		f.score2 = scoreToInt(score2);
-		f.totalScore = sumScore(score1, score2);
-		f.currentScore = sumScore(score1, score2);
+
+		var score1 = convertBowling1(symbol1);
+		var score2 = convertBowling2(score1, symbol2);
+		var sumScore = score1 + score2;
+
+		f.name1 = symbol1; 
+		f.name2 = symbol2;
+		f.score1 = score1;
+		f.score2 = score2;
+		f.totalScore = sumScore;
+		f.currentScore = sumScore;
+
+		if(isFrame10){
+			var bonus = scores[index + 1];
+			var score3 = convertBowling2(score2, bonus);
+			f.bonus = bonus;
+			f.score3 = score3;
+		}
 		frames = append(frames, *f);
 	}
+	
+	// for index, frame := range frames {
+	// 	fmt.Println("Frame:", index + 1, "===>",frame.name1, frame.name2, frame.score3,  ":", frame.score1, frame.score2,);
+	// }
 	return frames;
 }
 
-func convertBowling1(score1 string) string {
-	if(score1 == "10"){
-		return "X";
+func convertBowling1(symbol1 string) int64 {
+	if(symbol1 == "X"){
+		return 10;
 	}
-	if(score1 == "0"){
-		return "-";
+	if(symbol1 == "-"){
+		return 0;
 	}
-	return score1;
-}
-
-func convertBowling2(score1 string, score2 string) string {
-	if(score1 == "10" && sumScore(score1, score2) == 10){
-		return "-";
-	}
-	if(sumScore(score1, score2) == 10){
-		return "/";
-	}
-	if(score2 == "0"){
-		return "-";
-	}
-	if(score2 == "10"){
-		return "X";
-	}
-	return score2;
-}
-
-func sumScore(score1 string, score2 string) int64 {
-	return scoreToInt(score1) + scoreToInt(score2);
-}
-
-func scoreToInt(score string) int64 {
-	num, err := strconv.ParseInt(score, 10, 0)
+	
+	score1, err := strconv.ParseInt(symbol1, 10, 64)
 	if err != nil {
 		fmt.Println(err)
 		return 0;
 	}	
-	return num;
+	
+	return score1;
+}
+
+func convertBowling2(score1 int64, symbol2 string) int64 {
+	if(symbol2 == "/") {
+		return 10 - score1;
+	}
+
+	var score2 = convertBowling1(symbol2);
+	if(score1 == 10 && (score1 + score2 == 10) ){
+		return 0;
+	}
+	return convertBowling1(symbol2);
 }
