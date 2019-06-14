@@ -130,8 +130,9 @@ func Test7(t *testing.T) {
 		"-", "-", "-",
 	}
 	result := board(scores);
-	expected := int64(60);
-	assert.Equal(t, expected, result[10 - 1].sumScore, "Result should be 1")
+	var expected int64;
+	expected = 60;
+	assert.Equal(t, expected, result[10 - 1].sumScore, "Result should be 36")
 }
 
 func Test8(t *testing.T) {
